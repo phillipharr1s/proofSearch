@@ -21,6 +21,7 @@ where a,b,c are rigid and X,Y,Z,W are meta variables, subsituting X or Y will le
 
 # Example Usage
 
+Prove that `x=y` implies `f(x)=f(y)`:
 ```
-ghci> showSearch $ q " ('eq X (f x) (f y))(e : 'eq X x y)(f:X(_:X))(y:X)(x:X)(X:#)  " -- x=y implies f(x)=f(y)
+ghci> showSearch $ q " ('eq X (f x) (f y))(e : 'eq X x y)(f:X(_:X))(y:X)(x:X)(X:#)  " 
 ```
