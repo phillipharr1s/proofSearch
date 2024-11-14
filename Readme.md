@@ -17,10 +17,10 @@ c = ?W
 
 where a,b,c are rigid and X,Y,Z,W are meta variables, subsituting X or Y will lead to a large number of unrefuted search nodes, substituting Z will lead to 1, and substituting W  will lead to 0. Thus we choose to substitute W and refute the whole branch. 
 
+[1] [Muñoz, C. (2001). Proof-term synthesis on dependent-type systems via explicit substitutions.](https://www.sciencedirect.com/science/article/pii/S0304397500001961)
+
 # Example Usage
 
 ```
 ghci> showSearch $ q " ('eq X (f x) (f y))(e : 'eq X x y)(f:X(_:X))(y:X)(x:X)(X:#)  " -- x=y implies f(x)=f(y)
 ```
-
-[1] [Muñoz, C. (2001). Proof-term synthesis on dependent-type systems via explicit substitutions.](https://www.sciencedirect.com/science/article/pii/S0304397500001961)
