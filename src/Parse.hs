@@ -1,10 +1,3 @@
-{-# LANGUAGE PatternSynonyms #-}
-{-# LANGUAGE ViewPatterns #-}
-{-# LANGUAGE PatternGuards #-}
-{-# LANGUAGE LambdaCase #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE NamedFieldPuns #-}
-
 module Parse where
 
 import Text.Parsec

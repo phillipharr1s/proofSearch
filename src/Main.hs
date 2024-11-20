@@ -1,10 +1,3 @@
-{-# LANGUAGE PatternSynonyms #-}
-{-# LANGUAGE ViewPatterns #-}
-{-# LANGUAGE PatternGuards #-}
-{-# LANGUAGE LambdaCase #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE NamedFieldPuns #-}
-
 module Main where
 
 import Data.List
@@ -28,7 +21,7 @@ import Grafting
 import Search
 
 main :: IO ()
-main = showSearch additionLeftIdentity
+main = showSearch additionCommutes
 
 p :: Pretty a => a -> IO ()
 p = putStrLn . pretty 
@@ -50,9 +43,8 @@ showSearch term = go 0 (initSearch $ initUnificationProblem term) where
     putStrLn $ "Iteration " ++ show i ++ "\nUnfinished terms: \n"
     forM_ (Queue.take 10 unfinished) $ \up -> do
       putStrLn $ pretty (mainTerm up) ++ "\n"
-    if i `mod` 100 ==0 
-      then putStrLn $ pretty (Queue.getMin unfinished)
-      else pure ()
+    when (i `mod` 100 == 0)
+      $ putStrLn $ pretty (Queue.getMin unfinished)
     putStrLn $ "Plus " ++ show (max 0 (Queue.size unfinished - 10)) ++ " more..."
     hFlush stdout
     go (i+1) (searchStep searchState)

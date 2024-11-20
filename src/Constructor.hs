@@ -1,9 +1,4 @@
-{-# LANGUAGE PatternSynonyms #-}
-{-# LANGUAGE ViewPatterns #-}
-{-# LANGUAGE PatternGuards #-}
-{-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE NamedFieldPuns #-}
 
 module Constructor where 
 
@@ -38,8 +33,7 @@ getEliminatorTarget _ = Nothing
 
 
 allConstructors :: [N]
-allConstructors = []
-  ++ 
+allConstructors = 
   [ "N" 
   , "S"
   , "Z"
@@ -56,14 +50,3 @@ allAliases :: [(N,T)]
 allAliases = 
  [ ("+", q " 'Nelim ('N[_:'N]) m (('S rec)[rec : 'N][_ : 'N]) [m : 'N]")
  ]
-
--- allDefinitions :: [(N,T)]
--- allDefinitions = 
---  [ ("+", q " 'Nelim ('N[_:'N]) m (('S rec)[rec : 'N][_ : 'N]) [m : 'N]")
---  ]
-
--- allDefinitionsContext :: [B]
--- allDefinitionsContext = go [] allDefinitions where
---   go c ((n,d):ds) = go (n :. t : c) ds where
---     Right t = typeCheckWithMetas [] c d
---   go c [] = c

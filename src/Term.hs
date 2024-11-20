@@ -1,9 +1,6 @@
 {-# LANGUAGE PatternSynonyms #-}
 {-# LANGUAGE ViewPatterns #-}
-{-# LANGUAGE PatternGuards #-}
-{-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE NamedFieldPuns #-}
 
 module Term where
 
@@ -98,7 +95,7 @@ collectMetaVars e = go e where
   go (a :@ b) = go a ++ go b
   go (a :< _ :. b) = go a ++ go b
   go (a :\ _ :. b) = go a ++ go b
-  go meta@(M _ _ subs _) = [meta] ++ concatMap (collectMetaVars.getTerm) subs 
+  go meta@(M _ _ subs _) = meta : concatMap (collectMetaVars.getTerm) subs 
   go _ = []
 
 metaVarNames = map (\(M n _ _ _) -> n) . collectMetaVars

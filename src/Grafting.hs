@@ -1,7 +1,3 @@
-{-# LANGUAGE PatternSynonyms #-}
-{-# LANGUAGE ViewPatterns #-}
-{-# LANGUAGE PatternGuards #-}
-{-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE NamedFieldPuns #-}
 
@@ -44,7 +40,7 @@ obviousGraftings :: UnificationProblem -> [ElementaryGrafting]
 obviousGraftings up = concatMap go (cons ++ map flipConstraint cons) where 
   cons = constraints up 
   go (_ :- a :?= b) = case (a, b) of 
-    (M n _ [] _, b ) | not (elem n $ metaVarNames b) && isGroundTerm b -> [([],[],(n, b))]
+    (M n _ [] _, b ) | notElem n (metaVarNames b) && isGroundTerm b -> [([],[],(n, b))]
     _ -> []
 
 allElementaryGraftings :: UnificationProblem -> [[ElementaryGrafting]]
@@ -115,7 +111,7 @@ elementaryGraftingsForMeta meta@(c :- n :. t) (UnificationProblem {mainTerm, met
         (newMetas, nb) <- imitations (i-1) c head headType
         go newMetas nb
           where
-           go newMetas (n,b@(a2 :< a1Name :. a1)) = [([xDec] ++ newMetas, (n',b'))] where
+           go newMetas (n,b@(a2 :< a1Name :. a1)) = [(xDec: newMetas, (n',b'))] where
             xName = getFreshName 
               (map (getName.dropContext) newMetas ++ allNames) 
               ((if a1 == K 1 then typeNames else valueNames) a1Name)
@@ -174,7 +170,7 @@ flipConstraint cons = cons
 
 rigidExpr :: T -> Bool
 rigidExpr e = case e of
-  M _ _ _ _ :@@ _ -> False 
+  M {} :@@ _ -> False 
   C _ :@@ _ -> case getEliminatorTarget e of 
     Just (M _ _ _ redexFlag) -> redexFlag
     _ -> True

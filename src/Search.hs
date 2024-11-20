@@ -1,10 +1,3 @@
-{-# LANGUAGE PatternSynonyms #-}
-{-# LANGUAGE ViewPatterns #-}
-{-# LANGUAGE PatternGuards #-}
-{-# LANGUAGE LambdaCase #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE NamedFieldPuns #-}
-
 module Search where
 
 import Data.List
@@ -22,7 +15,7 @@ import Grafting
 
 
 
-type SearchState = ([UnificationProblem], (MinQueue UnificationProblem))
+type SearchState = ([UnificationProblem], MinQueue UnificationProblem)
 
 initSearch up = ([], Queue.singleton up)
 

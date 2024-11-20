@@ -1,10 +1,3 @@
-{-# LANGUAGE PatternSynonyms #-}
-{-# LANGUAGE ViewPatterns #-}
-{-# LANGUAGE PatternGuards #-}
-{-# LANGUAGE LambdaCase #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE NamedFieldPuns #-}
-
 module Pretty where
 
 import Data.List
@@ -25,7 +18,7 @@ instance Pretty T where
       f (x :. y) = "(" ++ x ++ ":"  ++ go y ++ ")"
     go (a :\\\ bs) = addParens a ++ intercalate "" (map f bs) where 
       f (x :. y) = "[" ++ x ++ ":"  ++ go y ++ "]"
-    go (K k) = take k (repeat '#')
+    go (K k) = replicate k '#'
     go (C n) = "'" ++ n
     go (V n) = n 
     go (M n frees subs _) = "?" ++ n ++ prettySubs where 
@@ -58,10 +51,10 @@ instance Pretty a => Pretty [a] where
   pretty a = indentLines $ unlines $ map pretty a
 
 instance (Pretty a, Pretty b) => Pretty (a, b) where
-  pretty (a, b) = indentLines $ unlines $ [pretty a, pretty b]
+  pretty (a, b) = indentLines $ unlines [pretty a, pretty b]
 
 instance (Pretty a, Pretty b, Pretty c) => Pretty (a, b, c) where
-  pretty (a, b, c) = indentLines $ unlines $ [pretty a, pretty b, pretty c]
+  pretty (a, b, c) = indentLines $ unlines [pretty a, pretty b, pretty c]
 
 instance Pretty a => Pretty (Maybe a) where
   pretty (Just a) = pretty a

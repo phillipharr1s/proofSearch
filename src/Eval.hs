@@ -1,9 +1,4 @@
-{-# LANGUAGE PatternSynonyms #-}
-{-# LANGUAGE ViewPatterns #-}
-{-# LANGUAGE PatternGuards #-}
-{-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE NamedFieldPuns #-}
 
 module Eval where
 
@@ -22,8 +17,8 @@ sub x y e = go e where
    | otherwise = Binder binder (go a) n (go b) 
   go (V n) | n == x = y 
   go e@(M n mFrees subs redexFlag) 
-   | null mFrees = M n [] (x := y : subs) redexFlag
-   | elem x mFrees = M n (yFrees ++ filter (/=x) mFrees) (x := y : subs) redexFlag
+   | null mFrees     = M n [] (x := y : subs) redexFlag
+   | elem x mFrees = M n (nub $ yFrees ++ filter (/=x) mFrees) (x := y : subs) redexFlag
    | otherwise = e
   go e = e
   yFrees = collectFreeVars y 

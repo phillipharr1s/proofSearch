@@ -27,7 +27,6 @@ typeCheckWithMetas metas c e = go c e where
   go c (a :< n :. b) = do 
     ta <- go (n :. b : c) a
     tb <- go c b
-    pure ta 
     case ta of
       K i -> pure $ K i
       _ -> Left (NotKind ta) 

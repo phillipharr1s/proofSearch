@@ -1,7 +1,3 @@
-{-# LANGUAGE PatternSynonyms #-}
-{-# LANGUAGE ViewPatterns #-}
-{-# LANGUAGE PatternGuards #-}
-{-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE NamedFieldPuns #-}
 
@@ -47,7 +43,7 @@ instance Ord UnificationProblem where
   compare up1 up2 = compare (heuristic up1) (heuristic up2)
 
 heuristic :: UnificationProblem -> Int
-heuristic up = size (mainTerm up) * (1+length (history up)) * (entropy up)
+heuristic up = size (mainTerm up) * (1 + length (history up)) * entropy up
 
 totalSize :: UnificationProblem -> Int
 totalSize up = size (mainTerm up) + length (metas up)
@@ -70,8 +66,8 @@ instance HasTerms UnificationProblem where
 
 initUnificationProblem :: T -> UnificationProblem
 initUnificationProblem t = UnificationProblem 
-  { mainTerm = (M "X" [] [] False)
-  , metas = ([ [] :- "X" :. t])
+  { mainTerm = M "X" [] [] False
+  , metas = [[] :- "X" :. t]
   , constraints = []
   , entropy = 0
   , parent = Nothing
